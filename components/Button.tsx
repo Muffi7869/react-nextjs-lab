@@ -19,3 +19,16 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   loading?: boolean;
   icon?: ReactNode;
 }
+
+export function Button({ variant = "primary", size = "md", loading = false, icon, children, className = "", disabled, ...rest }: ButtonProps) {
+  return (
+    <button
+      className={`inline-flex items-center gap-2 rounded-lg font-medium transition disabled:opacity-50 ${variants[variant]} ${sizes[size]} ${className}`}
+      disabled={disabled || loading}
+      {...rest}
+    >
+      {loading ? <span className="h-4 w-4 animate-spin rounded-full border-2 border-white/40 border-t-white" /> : icon}
+      {children}
+    </button>
+  );
+}
