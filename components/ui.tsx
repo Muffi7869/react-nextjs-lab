@@ -10,3 +10,8 @@ export function Card({ title, children, footer }: { title?: string; children: Re
     </div>
   );
 }
+
+export function Badge({ tone = "slate", children }: { tone?: "slate" | "green" | "red" | "amber"; children: ReactNode }) {
+  const tones = { slate: "bg-slate-100 text-slate-700", green: "bg-emerald-100 text-emerald-700", red: "bg-rose-100 text-rose-700", amber: "bg-amber-100 text-amber-700" };
+  return <span className={`rounded-full px-2.5 py-0.5 text-xs font-medium ${tones[tone]}`}>{children}</span>;
+}
