@@ -15,3 +15,17 @@ export function Badge({ tone = "slate", children }: { tone?: "slate" | "green" |
   const tones = { slate: "bg-slate-100 text-slate-700", green: "bg-emerald-100 text-emerald-700", red: "bg-rose-100 text-rose-700", amber: "bg-amber-100 text-amber-700" };
   return <span className={`rounded-full px-2.5 py-0.5 text-xs font-medium ${tones[tone]}`}>{children}</span>;
 }
+
+export function Tabs({ tabs }: { tabs: { label: string; content: ReactNode }[] }) {
+  const [active, setActive] = useState(0);
+  return (
+    <div>
+      <div role="tablist" className="flex gap-1 rounded-lg bg-slate-100 p-1 w-fit">
+        {tabs.map((t, i) => (
+          <button key={t.label} role="tab" aria-selected={i === active} onClick={() => setActive(i)} className={`rounded-md px-3 py-1.5 text-sm ${i === active ? "bg-white shadow-sm font-medium" : "text-slate-600"}`}>{t.label}</button>
+        ))}
+      </div>
+      <div role="tabpanel" className="mt-4">{tabs[active]?.content}</div>
+    </div>
+  );
+}
