@@ -61,3 +61,9 @@ export function Accordion({ items }: { items: { q: string; a: string }[] }) {
     </div>
   );
 }
+
+export function Avatar({ name, size = 40 }: { name: string; size?: number }) {
+  const initials = name.split(" ").map((p) => p[0]).slice(0, 2).join("").toUpperCase();
+  const hue = [...name].reduce((h, c) => h + c.charCodeAt(0), 0) % 360;
+  return <span className="inline-grid place-items-center rounded-full font-semibold text-white" style={{ width: size, height: size, background: `hsl(${hue} 60% 50%)` }}>{initials}</span>;
+}
