@@ -47,3 +47,17 @@ export function Modal({ open, onClose, title, children }: { open: boolean; onClo
     </div>
   );
 }
+
+export function Accordion({ items }: { items: { q: string; a: string }[] }) {
+  const [open, setOpen] = useState<number | null>(null);
+  return (
+    <div className="divide-y rounded-xl ring-1 ring-slate-200">
+      {items.map((it, i) => (
+        <div key={it.q}>
+          <button onClick={() => setOpen(open === i ? null : i)} className="flex w-full justify-between px-4 py-3 text-left font-medium" aria-expanded={open === i}>{it.q}<span>{open === i ? "-" : "+"}</span></button>
+          {open === i && <p className="px-4 pb-3 text-sm text-slate-600">{it.a}</p>}
+        </div>
+      ))}
+    </div>
+  );
+}
