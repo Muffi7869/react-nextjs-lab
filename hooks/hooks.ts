@@ -29,3 +29,5 @@ export function useDebounce<T>(value: T, ms = 300): T {
   }, [value, ms]);
   return debounced;
 }
+
+export type FetchState<T> = { data: T | null; error: string | null; loading: boolean };
