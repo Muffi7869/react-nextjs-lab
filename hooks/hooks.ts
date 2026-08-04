@@ -20,3 +20,12 @@ export function useLocalStorage<T>(key: string, initial: T) {
   }, [key, value]);
   return [value, setValue] as const;
 }
+
+export function useDebounce<T>(value: T, ms = 300): T {
+  const [debounced, setDebounced] = useState(value);
+  useEffect(() => {
+    const t = setTimeout(() => setDebounced(value), ms);
+    return () => clearTimeout(t);
+  }, [value, ms]);
+  return debounced;
+}
