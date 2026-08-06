@@ -64,3 +64,15 @@ export function usePrevious<T>(value: T): T | undefined {
   }, [value]);
   return ref.current;
 }
+
+export function useInterval(callback: () => void, ms: number | null) {
+  const saved = useRef(callback);
+  useEffect(() => {
+    saved.current = callback;
+  }, [callback]);
+  useEffect(() => {
+    if (ms === null) return;
+    const id = setInterval(() => saved.current(), ms);
+    return () => clearInterval(id);
+  }, [ms]);
+}
