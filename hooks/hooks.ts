@@ -56,3 +56,11 @@ export function useToggle(initial = false) {
   const toggle = useCallback(() => setOn((v) => !v), []);
   return [on, toggle, setOn] as const;
 }
+
+export function usePrevious<T>(value: T): T | undefined {
+  const ref = useRef<T | undefined>(undefined);
+  useEffect(() => {
+    ref.current = value;
+  }, [value]);
+  return ref.current;
+}
