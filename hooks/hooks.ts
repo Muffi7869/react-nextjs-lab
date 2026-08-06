@@ -50,3 +50,9 @@ export function useFetch<T>(url: string | null) {
   const refetch = useCallback(() => setTick((t) => t + 1), []);
   return { ...state, refetch };
 }
+
+export function useToggle(initial = false) {
+  const [on, setOn] = useState(initial);
+  const toggle = useCallback(() => setOn((v) => !v), []);
+  return [on, toggle, setOn] as const;
+}
