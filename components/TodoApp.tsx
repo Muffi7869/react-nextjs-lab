@@ -21,3 +21,38 @@ export function TodoItem({ todo, onToggle, onDelete }: { todo: Todo; onToggle: (
     </li>
   );
 }
+
+export function TodoApp() {
+  const [todos, setTodos] = useLocalStorage<Todo[]>("todos", []);
+  const [text, setText] = useState("");
+  const [filter, setFilter] = useState<Filter>("all");
+  const visible = useMemo(() => filterTodos(todos, filter), [todos, filter]);
+  const left = todos.filter((t) => !t.done).length;
+  function add(e: FormEvent) {
+    e.preventDefault();
+    if (!text.trim()) return;
+    setTodos([...todos, { id: Date.now(), text: text.trim(), done: false }]);
+    setText("");
+  }
+  return (
+    <div className="mx-auto max-w-md rounded-2xl bg-white p-6 shadow-sm">
+      <form onSubmit={add} className="flex gap-2">
+        <input value={text} onChange={(e) => setText(e.target.value)} placeholder="what needs doing?" className="flex-1 rounded-lg border px-3 py-2" />
+        <button className="rounded-lg bg-indigo-600 px-4 text-white">add</button>
+      </form>
+      <ul className="mt-4 divide-y">
+        {visible.map((t) => (
+          <TodoItem key={t.id} todo={t} onToggle={() => setTodos(todos.map((x) => (x.id === t.id ? { ...x, done: !x.done } : x)))} onDelete={() => setTodos(todos.filter((x) => x.id !== t.id))} />
+        ))}
+      </ul>
+      <div className="mt-4 flex items-center justify-between text-sm text-slate-500">
+        <span>{left} left</span>
+        <div className="flex gap-1">
+          {(["all", "active", "done"] as const).map((f) => (
+            <button key={f} onClick={() => setFilter(f)} className={`rounded px-2 py-1 ${filter === f ? "bg-slate-900 text-white" : ""}`}>{f}</button>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
