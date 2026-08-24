@@ -18,3 +18,15 @@ export function searchCourses(courses: Course[], query: string, dept: string): C
   const q = query.trim().toLowerCase();
   return courses.filter((c) => (dept === "ALL" || c.dept === dept) && (!q || c.code.toLowerCase().includes(q) || c.title.toLowerCase().includes(q)));
 }
+
+export function highlight(text: string, query: string) {
+  const i = text.toLowerCase().indexOf(query.toLowerCase());
+  if (!query || i < 0) return text;
+  return (
+    <>
+      {text.slice(0, i)}
+      <mark className="rounded bg-yellow-200">{text.slice(i, i + query.length)}</mark>
+      {text.slice(i + query.length)}
+    </>
+  );
+}
