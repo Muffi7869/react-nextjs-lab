@@ -13,3 +13,8 @@ export const COURSES: Course[] = [
   { code: "DSC 10", title: "Principles of Data Science", units: 4, dept: "DSC" },
   { code: "COGS 9", title: "Intro to Data Science", units: 4, dept: "COGS" },
 ];
+
+export function searchCourses(courses: Course[], query: string, dept: string): Course[] {
+  const q = query.trim().toLowerCase();
+  return courses.filter((c) => (dept === "ALL" || c.dept === dept) && (!q || c.code.toLowerCase().includes(q) || c.title.toLowerCase().includes(q)));
+}
