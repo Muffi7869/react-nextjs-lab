@@ -11,3 +11,5 @@ npm run dev
 - `/todos` - todo app persisted with a `useLocalStorage` hook
 - `/courses` - debounced search with highlighting, plus `app/api/courses` route handlers (GET with query params, POST with validation)
 - `/components` - button variants, tabs, modal (esc to close), accordion, avatars
+
+custom hooks live in `hooks/hooks.ts`: `useLocalStorage`, `useDebounce`, `useFetch` (with abort), `useToggle`, `usePrevious`, `useInterval`.
